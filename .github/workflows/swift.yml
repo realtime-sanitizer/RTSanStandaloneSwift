@@ -1,0 +1,39 @@
+# This workflow will build a Swift project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+name: Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    name: Ubuntu 24.04
+    steps:
+    - name: Install Swift
+      uses: tayloraswift/swift-install-action@master
+      with:
+        swift-prefix: "swift-6.0.3-release/ubuntu2404/swift-6.0.3-RELEASE"
+        swift-id: "swift-6.0.3-RELEASE-ubuntu24.04"
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test -v
+  macos:
+    runs-on: macos-15
+    name: macOS
+    steps:
+    - uses: actions/checkout@v4
+    - name: Print arch
+      run: arch
+    - name: Build
+      run: swift build --build-tests --vv
+    - name: Run tests
+      run: export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false"; export DYLD_INSERT_LIBRARIES="/Users/runner/work/SwiftRealtimeSanitizer/SwiftRealtimeSanitizer/.build/arm64-apple-macosx/debug/libclang_rt.rtsan_osx_dynamic.dylib"; /Applications/Xcode_16.app/Contents/Developer/usr/bin/xctest /Users/runner/work/SwiftRealtimeSanitizer/SwiftRealtimeSanitizer/.build/arm64-apple-macosx/debug/SwiftRealtimeSanitizerPackageTests.xctest
