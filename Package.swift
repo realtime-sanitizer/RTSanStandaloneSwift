@@ -4,6 +4,12 @@
 import PackageDescription
 import CompilerPluginSupport
 
+#if arch(x86_64)
+let path = "x86_64"
+#else
+let path = "aarch64"
+#endif
+
 let package = Package(
     name: "SwiftRealtimeSanitizer",
     platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .macCatalyst(.v13)],
@@ -33,7 +39,7 @@ let package = Package(
                 .target(name: "RealtimeSanitizerCBindings", condition: .when(platforms: [.linux]))
             ],
             linkerSettings: [
-                .unsafeFlags(["-L", "../SwiftRealtimeSanitizer/Binary", "-lrtsan"], .when(platforms: [.linux])),
+                .unsafeFlags(["-L", "../rtsan-standalone-swift/Binary/\(path)", "-lrtsan"], .when(platforms: [.linux])),
             ]
         ),
         .target(

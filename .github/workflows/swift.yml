@@ -25,7 +25,7 @@ jobs:
     - name: Build
       run: swift build -v
     - name: Run tests
-      run: swift test -v
+      run: export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false"; swift test -v
   macos:
     runs-on: macos-15
     name: macOS
