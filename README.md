@@ -1,4 +1,4 @@
-# SwiftRealtimeSanitizer
+# rtsan-standalone-swift
 
 This is a wrapper for the standalone version of RealtimeSanitizer (RTSan) to detect real-time violations in Swift applications.
 You can find more information in the [Official Clang Docs](https://clang.llvm.org/docs/RealtimeSanitizer.html) and the [RTSan Repository](https://github.com/realtime-sanitizer/rtsan).
@@ -34,7 +34,7 @@ SUMMARY: RealtimeSanitizer: unsafe-library-call (libsystem_malloc.dylib:arm64+0x
 
 ## Setup
 
-To use SwiftRealtimeSanitizer, add it as a SPM package dependency to your `Package.swift` file, or in Xcode UI. 
+To use rtsan-standalone-swift, add it as a SPM package dependency to your `Package.swift` file, or in Xcode UI. 
 
 By default, `@NonBlocking` macro will only report violations in `DEBUG` configuration. You can configure this behaviour by providing your custom configuration:
 
@@ -43,11 +43,11 @@ By default, `@NonBlocking` macro will only report violations in `DEBUG` configur
 func process() { print("") }
 ```
 
-### Excluding SwiftRealtimeSanitizer from production builds
+### Excluding rtsan-standalone-swift from production builds
 
-While SwiftRealtimeSanitizer will not have runtime overhead if configuration does not match, it is still recommended to remove linked libraries from production builds.
+While rtsan-standalone-swift will not have runtime overhead if configuration does not match, it is still recommended to remove linked libraries from production builds.
 
-You can do this by explicitly excluding SwiftRealtimeSanitizer in specific configurations:
+You can do this by explicitly excluding rtsan-standalone-swift in specific configurations:
 
 ```bash
 EXCLUDED_SOURCE_FILE_NAMES = RealtimeSanitizer.o RealtimeSanitizerCore.o
@@ -65,7 +65,7 @@ For a full list of options see here: https://clang.llvm.org/docs/RealtimeSanitiz
 
 ## Availability
 
-SwiftRealtimeSanitizer is available on macOS, iOS, iOS Simulator and Linux.
+rtsan-standalone-swift is available on macOS, iOS, iOS Simulator and Linux.
 
 > [!WARNING]
 > Linux support is very basic and we welcome contributions.
