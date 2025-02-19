@@ -36,4 +36,4 @@ jobs:
     - name: Build
       run: swift build --build-tests --vv
     - name: Run tests
-      run: export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false"; export DYLD_INSERT_LIBRARIES="/Users/runner/work/rtsan-standalone-swift/rtsan-standalone-swift/.build/arm64-apple-macosx/debug/libclang_rt.rtsan_osx_dynamic.dylib"; /Applications/Xcode_16.app/Contents/Developer/usr/bin/xctest /Users/runner/work/rtsan-standalone-swift/rtsan-standalone-swift/.build/arm64-apple-macosx/debug/SwiftRealtimeSanitizerPackageTests.xctest
+      run: export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false"; export DYLD_INSERT_LIBRARIES="/Users/runner/work/rtsan-standalone-swift/rtsan-standalone-swift/.build/arm64-apple-macosx/debug/libclang_rt.rtsan_osx_dynamic.dylib"; /Applications/Xcode_16.app/Contents/Developer/usr/bin/xctest /Users/runner/work/rtsan-standalone-swift/rtsan-standalone-swift/.build/arm64-apple-macosx/debug/rtsan-standalone-swiftPackageTests.xctest
