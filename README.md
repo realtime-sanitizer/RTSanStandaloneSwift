@@ -18,7 +18,7 @@ At runtime, real-time violations are presented with a stack trace:
 
 ```bash
 ERROR: RealtimeSanitizer: unsafe-library-call
-Intercepted call to real-time unsafe function `malloc` in real-time context!
+Intercepted call to real-time unsafe function `malloc` in real-time context!
     #0 0x000102b86fa0 in malloc rtsan_interceptors_posix.cpp:720
     #1 0x0001801c9db0 in _malloc_type_malloc_outlined+0x70 (libsystem_malloc.dylib:arm64+0xfdb0)
     #2 0x000194adfa68 in swift_slowAlloc+0x24 (libswiftCore.dylib:arm64+0x2f8a68)

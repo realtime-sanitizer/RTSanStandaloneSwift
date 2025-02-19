@@ -8,7 +8,7 @@
 /// will error at runtime with:
 ///
 ///     ERROR: RealtimeSanitizer: unsafe-library-call
-///     Intercepted call to real-time unsafe function `malloc` in real-time context!
+///     Intercepted call to real-time unsafe function `malloc` in real-time context!
 @attached(body)
 public macro NonBlocking(in configuration: StaticString = "DEBUG") = #externalMacro(module: "RealtimeSanitizerMacros", type: "NonBlocking")
 
