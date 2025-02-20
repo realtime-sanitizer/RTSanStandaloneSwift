@@ -81,8 +81,3 @@ export CXX=clang++
 ## TODO:
 
 - [ ] Call Ensure initialized at appropriate point
-- [ ] Documentation
-- [ ] Use Clang implementation when available in Swift C++ interop
-- [ ] Discuss possible native Swift integration
-- [ ] Death callback doesn't seem to be useful for testing since after it is called, process exists.
-- [ ] Use SPM traits once they are availble in Swift 6.1
