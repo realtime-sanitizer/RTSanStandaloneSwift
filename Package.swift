@@ -30,7 +30,8 @@ let package = Package(
         ),
         .target(
             name: "RealtimeSanitizerCBindings",
-            path: "Sources/RealtimeSanitizerCBindings"
+            path: "Sources/RealtimeSanitizerCBindings",
+            cSettings: [.headerSearchPath("../../rtsan/include/rtsan_standalone")]
         ),
         .target(
             name: "RealtimeSanitizerCore",
