@@ -39,24 +39,15 @@ Clone LLVM project and build rtsan following procedure from [the docs](https://c
 macOS and iOS versions use `xcframework` format to ship a prebuilt rtsan dynamic libraries for each platform.
 This avoids the need to compile LLVM sanitizer when integrating this library.
 
-There are two differences compared to default build process from the docs:
-
-- In order to satisfy `xcodebuild`, you will also need to pass `DCOMPILER_RT_ENABLE_MACCATALYST=OFF` flag. Without this flag, the following step doesn't work as xcodebuild refuses to bundle such a dylib. This needs to be investigated further.
-- In `compiler-rt/cmake/Modules/AllSupportedArchDefs.cmake`, enable arm64e:
-
-```
-if(APPLE)
-  set(ARM64 arm64 arm64e)
-  ...
-```
+One differences compared to default build process from the docs is that in order to satisfy `xcodebuild`, you will also need to pass `DCOMPILER_RT_ENABLE_MACCATALYST=OFF` flag. Without this flag, the following step doesn't work as xcodebuild refuses to bundle such a dylib. This needs to be investigated further.
 
 Once you build rtsan, you can generate `xcframework` in the following way:
 
 ```
 xcrun xcodebuild -create-xcframework \
-  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_ios_dynamic.dylib -headers RTSanStandaloneSwift/Sources/RealtimeSanitizerCBindings/include \
-  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_iossim_dynamic.dylib -headers RTSanStandaloneSwift/Sources/RealtimeSanitizerCBindings/include \
-  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_osx_dynamic.dylib -headers RTSanStandaloneSwift/Sources/RealtimeSanitizerCBindings/include \
+  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_ios_dynamic.dylib -headers RTSanStandaloneSwift/rtsan/include/rtsan_standalone \
+  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_iossim_dynamic.dylib -headers RTSanStandaloneSwift/rtsan/include/rtsan_standalone \
+  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_osx_dynamic.dylib -headers RTSanStandaloneSwift/rtsan/include/rtsan_standalone \
   -output rtsan.xcframework
 ```
 
