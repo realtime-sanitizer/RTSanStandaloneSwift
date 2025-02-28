@@ -11,7 +11,7 @@ let path = "aarch64"
 #endif
 
 let package = Package(
-    name: "rtsan-standalone-swift",
+    name: "RTSanStandaloneSwift",
     platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .macCatalyst(.v13)],
     products: [
         .library(name: "RealtimeSanitizer", targets: ["RealtimeSanitizer", "RealtimeSanitizerCore"])
@@ -39,7 +39,7 @@ let package = Package(
                 .target(name: "RealtimeSanitizerCBindings", condition: .when(platforms: [.linux]))
             ],
             linkerSettings: [
-                .unsafeFlags(["-L", "../rtsan-standalone-swift/Binary/\(path)", "-lrtsan"], .when(platforms: [.linux])),
+                .unsafeFlags(["-L", "../RTSanStandaloneSwift/Binary/\(path)", "-lrtsan"], .when(platforms: [.linux])),
             ]
         ),
         .target(

@@ -11,7 +11,7 @@ E.g. when you run the test, you will get the following error:
 
 ```
 ==64625==ERROR: Interceptors are not working. This may be because RealtimeSanitizer is loaded too late (e.g. via dlopen). Please launch the executable with:
-DYLD_INSERT_LIBRARIES=/Users/josipcavar/Library/Developer/Xcode/DerivedData/rtsan-standalone-swift-dgcolftpwmfxydcenfpxifrysmjc/Build/Products/Debug/libclang_rt.rtsan_osx_dynamic.dylib
+DYLD_INSERT_LIBRARIES=/Users/josipcavar/Library/Developer/Xcode/DerivedData/RTSanStandaloneSwift-dgcolftpwmfxydcenfpxifrysmjc/Build/Products/Debug/libclang_rt.rtsan_osx_dynamic.dylib
 "interceptors not installed" && 0
 ```
 
@@ -21,7 +21,7 @@ Additionally, for tests to work, we need the following `RTSAN_OPTIONS`:
 - `abort_on_error=false`
 - `halt_on_error=false`
 
-These are both enabled in `rtsan-standalone-swift-Package` scheme.
+These are both enabled in `RTSanStandaloneSwift-Package` scheme.
 
 Tests currently work by intercepting stderr output and making decisions based on that. This is not ideal, but seems like the only way to avoid test crash:
 
@@ -54,9 +54,9 @@ Once you build rtsan, you can generate `xcframework` in the following way:
 
 ```
 xcrun xcodebuild -create-xcframework \
-  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_ios_dynamic.dylib -headers rtsan-standalone-swift/Sources/RealtimeSanitizerCBindings/include \
-  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_iossim_dynamic.dylib -headers rtsan-standalone-swift/Sources/RealtimeSanitizerCBindings/include \
-  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_osx_dynamic.dylib -headers rtsan-standalone-swift/Sources/RealtimeSanitizerCBindings/include \
+  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_ios_dynamic.dylib -headers RTSanStandaloneSwift/Sources/RealtimeSanitizerCBindings/include \
+  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_iossim_dynamic.dylib -headers RTSanStandaloneSwift/Sources/RealtimeSanitizerCBindings/include \
+  -library lib/clang/20/lib/darwin/libclang_rt.rtsan_osx_dynamic.dylib -headers RTSanStandaloneSwift/Sources/RealtimeSanitizerCBindings/include \
   -output rtsan.xcframework
 ```
 
