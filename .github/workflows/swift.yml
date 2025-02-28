@@ -22,6 +22,8 @@ jobs:
 
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        submodules: 'true'
     - name: Build
       run: swift build -v
     - name: Run tests
@@ -31,6 +33,8 @@ jobs:
     name: macOS
     steps:
     - uses: actions/checkout@v4
+      with:
+        submodules: 'true'
     - name: Print arch
       run: arch
     - name: Build
