@@ -1,0 +1,3 @@
+[submodule "rtsan"]
+	path = rtsan
+	url = git@github.com:realtime-sanitizer/rtsan.git
