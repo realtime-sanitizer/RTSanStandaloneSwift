@@ -1,1 +1,1 @@
-#include "rtsan_standalone.h"
+#include "../../../rtsan/include/rtsan_standalone/rtsan_standalone.h"

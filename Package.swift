@@ -39,7 +39,7 @@ let package = Package(
                 .target(name: "RealtimeSanitizerCBindings", condition: .when(platforms: [.linux]))
             ],
             linkerSettings: [
-                .unsafeFlags(["-L", "../RTSanStandaloneSwift/Binary/\(path)", "-lrtsan"], .when(platforms: [.linux])),
+                .unsafeFlags(["-L", "./Binary/\(path)", "-lrtsan"], .when(platforms: [.linux])),
             ]
         ),
         .target(
