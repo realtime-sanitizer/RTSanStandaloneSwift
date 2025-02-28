@@ -15,23 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftRealtimeSanitizer"
-               BuildableName = "SwiftRealtimeSanitizer"
-               BlueprintName = "SwiftRealtimeSanitizer"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Playground"
-               BuildableName = "Playground"
-               BlueprintName = "Playground"
+               BlueprintIdentifier = "RealtimeSanitizer"
+               BuildableName = "RealtimeSanitizer"
+               BlueprintName = "RealtimeSanitizer"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -49,6 +35,20 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Playground"
+               BuildableName = "Playground"
+               BlueprintName = "Playground"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -58,16 +58,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftRealtimeSanitizerTests"
-               BuildableName = "SwiftRealtimeSanitizerTests"
-               BlueprintName = "SwiftRealtimeSanitizerTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
@@ -90,8 +80,7 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AVAudioEngine"
@@ -99,30 +88,16 @@
             BlueprintName = "AVAudioEngine"
             ReferencedContainer = "container:">
          </BuildableReference>
-      </BuildableProductRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "Playground"
-            BuildableName = "Playground"
-            BlueprintName = "Playground"
-            ReferencedContainer = "container:">
-         </BuildableReference>
       </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "DYLD_PRINT_LIBRARIES"
-            value = "1"
-            isEnabled = "NO">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "DYLD_INSERT_LIBRARIES"
-            value = "/Users/josipcavar/Library/Developer/Xcode/DerivedData/SwiftRealtimeSanitizer-dgcolftpwmfxydcenfpxifrysmjc/Build/Products/Debug/libclang_rt.rtsan_osx_dynamic.dylib"
+            key = "RTSAN_OPTIONS"
+            value = "abort_on_error=false:halt_on_error=false"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
-            key = "RTSAN_OPTIONS"
-            value = "abort_on_error=false:halt_on_error=false"
+            key = "DYLD_INSERT_LIBRARIES"
+            value = "/Users/josipcavar/Library/Developer/Xcode/DerivedData/rtsan-standalone-swift-dizgcjljjwdwckgznqnimwkurhwl/Build/Products/Debug/libclang_rt.rtsan_osx_dynamic.dylib"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
@@ -133,16 +108,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AVAudioEngine"
-            BuildableName = "AVAudioEngine"
-            BlueprintName = "AVAudioEngine"
+            BlueprintIdentifier = "Playground"
+            BuildableName = "Playground"
+            BlueprintName = "Playground"
             ReferencedContainer = "container:">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
