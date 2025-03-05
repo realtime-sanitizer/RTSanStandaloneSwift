@@ -36,7 +36,7 @@ let package = Package(
         .target(
             name: "RealtimeSanitizerCore",
             dependencies: [
-                .target(name: "rtsan", condition: .when(platforms: [.macOS])),
+                .target(name: "rtsan", condition: .when(platforms: [.macOS, .iOS, .tvOS, .watchOS, .macCatalyst])),
                 .target(name: "RealtimeSanitizerCBindings", condition: .when(platforms: [.linux]))
             ],
             linkerSettings: [
