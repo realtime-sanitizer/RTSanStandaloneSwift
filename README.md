@@ -38,7 +38,7 @@ To use RTSanStandaloneSwift, add it as a SPM package dependency to your `Package
 
 Package dependency:
 ```
-.package(url: "https://github.com/realtime-sanitizer/RTSanStandaloneSwift", branch: "feature/swift-support")
+.package(url: "https://github.com/realtime-sanitizer/RTSanStandaloneSwift", .upToNextMajor(from: "0.1.0"))
 ```
 
 Target dependency:
