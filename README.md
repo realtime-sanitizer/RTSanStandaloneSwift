@@ -34,7 +34,17 @@ SUMMARY: RealtimeSanitizer: unsafe-library-call (libsystem_malloc.dylib:arm64+0x
 
 ## Setup
 
-To use RTSanStandaloneSwift, add it as a SPM package dependency to your `Package.swift` file, or in Xcode UI. 
+To use RTSanStandaloneSwift, add it as a SPM package dependency to your `Package.swift` file, or in Xcode UI:
+
+Package dependency:
+```
+.package(url: "https://github.com/realtime-sanitizer/RTSanStandaloneSwift", branch: "feature/swift-support")
+```
+
+Target dependency:
+```
+.productItem(name: "RealtimeSanitizer", package: "RTSanStandaloneSwift")
+```
 
 By default, `@NonBlocking` macro will only report violations in `DEBUG` configuration. You can configure this behaviour by providing your custom configuration:
 
@@ -62,6 +72,16 @@ RTSAN_OPTIONS=halt_on_error=false
 ```
 
 For a full list of options see here: https://clang.llvm.org/docs/RealtimeSanitizer.html#run-time-flags.
+
+## Sandboxed apps
+
+For sandboxed apps, it is recommended to update your scheme with the following environment options:
+
+```
+RTSAN_OPTIONS=symbolize=true:external_symbolizer_path=""
+```
+
+This will force in-process sybolizer and avoid permission issues during symbolication.
 
 ## Availability
 
