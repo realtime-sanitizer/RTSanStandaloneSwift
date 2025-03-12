@@ -1,0 +1,17 @@
+name: Release RTSan binaries
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    name: Ubuntu 24.04
+    steps:
+    - name: Download sources
+      uses: llvm/actions/get-llvm-project-src@main
+      with:
+        repo: "llvm/llvm-project"
+        ref: "llvmorg-20.1.0"
+    - name: Build and Test
+      uses: llvm/actions/build-and-test-llvm-project@main
+      with:
+        cmake_args: "-DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS=\"clang;compiler-rt\" -DLLVM_TARGETS_TO_BUILD=Native"
+
