@@ -68,7 +68,3 @@ In order to compile LLVM successfully, you need to update default compilers to c
 export CC=clang
 export CXX=clang++
 ```
-
-## TODO:
-
-- [ ] Call Ensure initialized at appropriate point
