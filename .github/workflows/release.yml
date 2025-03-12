@@ -15,7 +15,7 @@ jobs:
         repo: "llvm/llvm-project"
         ref: "llvmorg-20.1.0"
     - name: Build and Test
-      uses: llvm/actions/build-and-test-llvm-project@main
+      uses: llvm/actions/build-test-llvm-project@main
       with:
         cmake_args: "-DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS=\"clang;compiler-rt\" -DLLVM_TARGETS_TO_BUILD=Native"
 
