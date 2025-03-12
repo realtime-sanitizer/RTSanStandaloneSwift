@@ -1,5 +1,9 @@
 name: Release RTSan binaries
 
+on:
+  push:
+    branches: [ "feature/release-action" ]
+
 jobs:
   linux:
     runs-on: ubuntu-24.04
