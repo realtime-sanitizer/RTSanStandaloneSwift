@@ -6,9 +6,10 @@ on:
 
 jobs:
   linux:
-    runs-on: 
-      - ubuntu-24.04
-      - ubuntu-24.04-arm
+    strategy:
+      matrix:
+          machine: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.machine }}
     name: Ubuntu 24.04
     steps:
     - name: Download sources
