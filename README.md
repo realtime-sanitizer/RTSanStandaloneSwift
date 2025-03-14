@@ -53,7 +53,7 @@ By default, `@NonBlocking` macro will only report violations in `DEBUG` configur
 func process() { print("") }
 ```
 
-On Linux, make sure to call `RealtimeSanitizer.ensureInitialized()` early in your process lifecycle.
+Make sure to call `RealtimeSanitizer.ensureInitialized()` early in your process lifecycle.
 
 ### Excluding RTSanStandaloneSwift from production builds
 
