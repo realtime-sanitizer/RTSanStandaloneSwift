@@ -45,6 +45,14 @@ jobs:
       with:
         cmake_args: "-G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS=\"clang;compiler-rt\" -DLLVM_TARGETS_TO_BUILD=Native -DCOMPILER_RT_ENABLE_MACCATALYST=OFF"
         build_target: "rtsan"
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        submodules: 'true'
+    - name: asdf
+      run: ls /home/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/build/lib/clang/20/lib/
+    - name: asdf1
+      run: ls /home/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/
     - name: Find binary
       run: find /home/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/ -name "libclang_rt.rtsan_osx_dynamic.dylib"
     - name: Find binary
