@@ -18,5 +18,10 @@ jobs:
       uses: llvm/actions/build-test-llvm-project@main
       with:
         cmake_args: "-G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS=\"clang;compiler-rt\" -DLLVM_TARGETS_TO_BUILD=Native"
-        build_target: "rtsan"
+        build_target: "rtsan"    
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: "libclang_rt.rtsan.a"
+        path: "/home/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/cmake/lib/clang/20/lib/x86_64-unknown-linux-gnu/libclang_rt.rtsan.a"
 
