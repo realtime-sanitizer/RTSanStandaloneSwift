@@ -38,6 +38,8 @@ jobs:
       with:
         repo: "llvm/llvm-project"
         ref: "llvmorg-20.1.0"
+    - name: Install Ninja
+      uses: llvm/actions/install-ninja@main
     - name: Build and Test
       uses: llvm/actions/build-test-llvm-project@main
       with:
