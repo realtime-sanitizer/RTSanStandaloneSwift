@@ -14,11 +14,15 @@ jobs:
       with:
         repo: "llvm/llvm-project"
         ref: "llvmorg-20.1.0"
+    - name: Print path
+      run: pwd; ls; ls /home/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/; ls /home/runner/work/RTSanStandaloneSwift/
     - name: Build and Test
       uses: llvm/actions/build-test-llvm-project@main
       with:
         cmake_args: "-G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS=\"clang;compiler-rt\" -DLLVM_TARGETS_TO_BUILD=Native"
-        build_target: "rtsan"    
+        build_target: "rtsan"
+    - name: Print path
+      run: pwd; ls;
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
