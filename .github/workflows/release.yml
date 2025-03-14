@@ -22,7 +22,7 @@ jobs:
         cmake_args: "-G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS=\"clang;compiler-rt\" -DLLVM_TARGETS_TO_BUILD=Native"
         build_target: "rtsan"
     - name: Find binary
-      run: find home/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/ -name "libclang_rt.rtsan.a"
+      run: find /home/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/ -name "libclang_rt.rtsan.a"
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
