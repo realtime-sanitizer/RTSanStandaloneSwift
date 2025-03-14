@@ -29,4 +29,27 @@ jobs:
       with:
         name: "libclang_rt.rtsan-${{ matrix.machine }}.a"
         path: "/home/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/build/lib/clang/20/lib/**/libclang_rt.rtsan.a"
+  macos:
+    runs-on: macos-15
+    name: macOS
+    steps:
+    - name: Download sources
+      uses: llvm/actions/get-llvm-project-src@main
+      with:
+        repo: "llvm/llvm-project"
+        ref: "llvmorg-20.1.0"
+    - name: Build and Test
+      uses: llvm/actions/build-test-llvm-project@main
+      with:
+        cmake_args: "-G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS=\"clang;compiler-rt\" -DLLVM_TARGETS_TO_BUILD=Native -DCOMPILER_RT_ENABLE_MACCATALYST=OFF"
+        build_target: "rtsan"
+    - name: Find binary
+      run: find /home/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/ -name "libclang_rt.rtsan_ios_dynamic.dylib"
+    - name: Create xcframework
+      run: xcrun xcodebuild -create-xcframework -library lib/clang/20/lib/darwin/libclang_rt.rtsan_ios_dynamic.dylib -headers RTSanStandaloneSwift/rtsan/include/rtsan_standalone -library lib/clang/20/lib/darwin/libclang_rt.rtsan_iossim_dynamic.dylib -headers RTSanStandaloneSwift/rtsan/include/rtsan_standalone -library lib/clang/20/lib/darwin/libclang_rt.rtsan_osx_dynamic.dylib -headers RTSanStandaloneSwift/rtsan/include/rtsan_standalone -output rtsan.xcframework
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: "rtsan.xcframeowkr"
+        path: "/home/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/build/lib/clang/20/lib/**/rtsan.xcframework"
 
