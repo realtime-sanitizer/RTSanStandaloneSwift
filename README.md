@@ -1,5 +1,9 @@
 # RTSanStandaloneSwift
 
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Frealtime-sanitizer%2FRTSanStandaloneSwift%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/realtime-sanitizer/RTSanStandaloneSwift)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Frealtime-sanitizer%2FRTSanStandaloneSwift%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/realtime-sanitizer/RTSanStandaloneSwift)
+[![Tests](https://github.com/realtime-sanitizer/RTSanStandaloneSwift/actions/workflows/swift.yml/badge.svg)](https://github.com/realtime-sanitizer/RTSanStandaloneSwift/actions/workflows/swift.yml)
+
 This is a wrapper for the standalone version of RealtimeSanitizer (RTSan) to detect real-time violations in Swift applications.
 You can find more information in the [Official Clang Docs](https://clang.llvm.org/docs/RealtimeSanitizer.html) and the [RTSan Repository](https://github.com/realtime-sanitizer/rtsan).
 
