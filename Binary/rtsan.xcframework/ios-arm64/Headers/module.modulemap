@@ -1,0 +1,4 @@
+module rtsan {
+    header "rtsan_standalone.h"
+    export *
+}

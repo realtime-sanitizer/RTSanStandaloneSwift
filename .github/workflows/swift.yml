@@ -1,0 +1,41 @@
+name: Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    name: Ubuntu 24.04
+    steps:
+    - name: Install Swift
+      uses: tayloraswift/swift-install-action@master
+      with:
+        swift-prefix: "swift-6.0.3-release/ubuntu2404/swift-6.0.3-RELEASE"
+        swift-id: "swift-6.0.3-RELEASE-ubuntu24.04"
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        submodules: 'true'
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false"; swift test -v
+  macos:
+    runs-on: macos-15
+    name: macOS
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'true'
+    - name: Build
+      run: swift build --build-tests --vv
+    - name: Run tests
+      run: >
+        export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false";
+        export DYLD_INSERT_LIBRARIES="/Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/libclang_rt.rtsan_osx_dynamic.dylib"; 
+        /Applications/Xcode_16.app/Contents/Developer/usr/bin/xctest /Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/RTSanStandaloneSwiftPackageTests.xctest
