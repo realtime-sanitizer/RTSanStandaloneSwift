@@ -50,7 +50,7 @@ jobs:
         cmake_args: "-G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS=\"clang;compiler-rt\" -DLLVM_TARGETS_TO_BUILD=Native -DCOMPILER_RT_ENABLE_MACCATALYST=OFF"
         build_target: "rtsan"
     - name: Create xcframework
-      run: xcrun xcodebuild -create-xcframework -library build/lib/clang/20/lib/darwin/libclang_rt.rtsan_osx_dynamic.dylib -headers rtsan/include/rtsan_standalone -headers Binary/include -library build/lib/clang/20/lib/darwin/libclang_rt.rtsan_iossim_dynamic.dylib -headers rtsan/include/rtsan_standalone -headers Binary/include -library build/lib/clang/20/lib/darwin/libclang_rt.rtsan_ios_dynamic.dylib -headers rtsan/include/rtsan_standalone -headers Binary/include -output rtsan.xcframework
+      run: xcrun xcodebuild -create-xcframework -library build/lib/clang/20/lib/darwin/libclang_rt.rtsan_osx_dynamic.dylib -headers Binary/include -library build/lib/clang/20/lib/darwin/libclang_rt.rtsan_iossim_dynamic.dylib -headers Binary/include -library build/lib/clang/20/lib/darwin/libclang_rt.rtsan_ios_dynamic.dylib -headers Binary/include -output rtsan.xcframework
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
