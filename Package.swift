@@ -20,7 +20,11 @@ let package = Package(
         .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.0-latest")
     ],
     targets: [
-        .binaryTarget(name: "rtsan", path: "Binary/rtsan.xcframework"),
+        .binaryTarget(
+            name: "rtsan",
+            url: "https://github.com/realtime-sanitizer/rtsan-libs/releases/download/v20.1.1.2/rtsan.xcframework.zip",
+            checksum: "f4f45abeec757adebc81f0c419da3aca0768357406cd7f8fee4c3a6289e50045"
+        ),
         .macro(
             name: "RealtimeSanitizerMacros",
             dependencies: [
