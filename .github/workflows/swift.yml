@@ -24,7 +24,7 @@ jobs:
     - name: Run tests
       run: export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false"; swift test -v
   macos:
-    runs-on: macos-15
+    runs-on: macos-26
     name: macOS
     steps:
     - uses: actions/checkout@v4
@@ -34,4 +34,4 @@ jobs:
       run: >
         export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false";
         export DYLD_INSERT_LIBRARIES="/Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/libclang_rt.rtsan_osx_dynamic.dylib";
-        /Applications/Xcode_16.app/Contents/Developer/usr/bin/xctest /Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/RTSanStandaloneSwiftPackageTests.xctest
+        xcrun xctest /Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/RTSanStandaloneSwiftPackageTests.xctest
