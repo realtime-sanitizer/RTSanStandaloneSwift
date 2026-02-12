@@ -34,11 +34,14 @@ jobs:
     # We can't use `xctest` directly because it only discovers XCTest tests, not Swift Testing @Test methods.
     # Instead, we use swiftpm-testing-helper which loads the test bundle (arm64) in-process,
     # allowing DYLD_INSERT_LIBRARIES to inject the RTSan interceptor library correctly.
+    # Note: DYLD_INSERT_LIBRARIES must be set AFTER resolving paths via xcode-select,
+    # otherwise subshells inherit it and crash on arm64e runners.
     - name: Run tests
-      run: >
-        export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false";
-        export DYLD_INSERT_LIBRARIES="/Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/libclang_rt.rtsan_osx_dynamic.dylib";
-        export DYLD_FRAMEWORK_PATH="$(xcode-select -p)/Platforms/MacOSX.platform/Developer/Library/Frameworks";
-        "$(xcode-select -p)/Toolchains/XcodeDefault.xctoolchain/usr/libexec/swift/pm/swiftpm-testing-helper"
-        --test-bundle-path /Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/RTSanStandaloneSwiftPackageTests.xctest/Contents/MacOS/RTSanStandaloneSwiftPackageTests
-        --testing-library swift-testing
+      run: |
+        XCODE_DEV=$(xcode-select -p)
+        export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false"
+        export DYLD_INSERT_LIBRARIES="/Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/libclang_rt.rtsan_osx_dynamic.dylib"
+        export DYLD_FRAMEWORK_PATH="$XCODE_DEV/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        "$XCODE_DEV/Toolchains/XcodeDefault.xctoolchain/usr/libexec/swift/pm/swiftpm-testing-helper" \
+          --test-bundle-path /Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/RTSanStandaloneSwiftPackageTests.xctest/Contents/MacOS/RTSanStandaloneSwiftPackageTests \
+          --testing-library swift-testing
