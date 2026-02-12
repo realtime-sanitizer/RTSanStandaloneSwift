@@ -1,5 +1,0 @@
-module rtsan {
-    header "../../../rtsan/include/rtsan_standalone/rtsan_standalone.h"
-    link "rtsan"
-    export *
-}
