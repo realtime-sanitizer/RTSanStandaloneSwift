@@ -19,12 +19,6 @@ jobs:
 
     - name: Checkout repository
       uses: actions/checkout@v3
-    - name: Audit artifact bundle
-      run: |
-        which llvm-objdump || find /home/runner/swift -name "llvm-objdump" 2>/dev/null || echo "llvm-objdump not found"
-        ls "$SWIFT_INSTALLATION/bin/" | grep -i llvm || echo "no llvm tools in bin"
-        export PATH="$SWIFT_INSTALLATION/bin:$PATH"
-        swift package experimental-audit-binary-artifact rtsan.artifactbundle
     - name: Build
       run: swift build -v
     - name: Run tests
