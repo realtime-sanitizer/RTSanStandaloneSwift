@@ -34,4 +34,4 @@ jobs:
       run: >
         export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false";
         export DYLD_INSERT_LIBRARIES="/Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/libclang_rt.rtsan_osx_dynamic.dylib";
-        xcrun xctest /Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/RTSanStandaloneSwiftPackageTests.xctest
+        /Applications/Xcode_26.2.app/Contents/Developer/usr/bin/xctest /Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/RTSanStandaloneSwiftPackageTests.xctest
