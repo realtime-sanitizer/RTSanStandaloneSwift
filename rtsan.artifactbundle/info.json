@@ -1,0 +1,27 @@
+{
+    "schemaVersion": "1.0",
+    "artifacts": {
+        "rtsan-linux": {
+            "version": "20.1.1.2",
+            "type": "staticLibrary",
+            "variants": [
+                {
+                    "path": "x86_64-unknown-linux-gnu/librtsan.a",
+                    "supportedTriples": ["x86_64-unknown-linux-gnu"],
+                    "staticLibraryMetadata": {
+                        "headerPaths": ["headers"],
+                        "moduleMapPath": "headers/module.modulemap"
+                    }
+                },
+                {
+                    "path": "aarch64-unknown-linux-gnu/librtsan.a",
+                    "supportedTriples": ["aarch64-unknown-linux-gnu"],
+                    "staticLibraryMetadata": {
+                        "headerPaths": ["headers"],
+                        "moduleMapPath": "headers/module.modulemap"
+                    }
+                }
+            ]
+        }
+    }
+}
