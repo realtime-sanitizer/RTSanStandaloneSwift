@@ -16,12 +16,13 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "rtsan",
-            url: "https://github.com/realtime-sanitizer/rtsan-libs/releases/download/v20.1.1.2/rtsan.xcframework.zip",
-            checksum: "f4f45abeec757adebc81f0c419da3aca0768357406cd7f8fee4c3a6289e50045"
+            url: "https://github.com/realtime-sanitizer/rtsan-libs/releases/download/v20.1.1.3/rtsan.xcframework.zip",
+            checksum: "d5e8aaf4663db0573e97d6a03a6140ab5e3dc7b60ae071c6c72c21a99002ad46"
         ),
         .binaryTarget(
             name: "rtsan-linux",
-            path: "rtsan.artifactbundle"
+            url: "https://github.com/realtime-sanitizer/rtsan-libs/releases/download/v20.1.1.3/rtsan.artifactbundle.zip",
+            checksum: "21e660f0a00559ba468ad87a710021ba9823f9b851d9c979d0a0fca536bd8d27"
         ),
         .macro(
             name: "RealtimeSanitizerMacros",
