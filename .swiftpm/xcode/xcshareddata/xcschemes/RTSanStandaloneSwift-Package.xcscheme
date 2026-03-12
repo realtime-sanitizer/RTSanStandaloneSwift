@@ -91,11 +91,6 @@
       </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "RTSAN_OPTIONS"
-            value = "abort_on_error=false:halt_on_error=false"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
             key = "DYLD_INSERT_LIBRARIES"
             value = "/Users/josipcavar/Library/Developer/Xcode/DerivedData/rtsan-standalone-swift-dizgcjljjwdwckgznqnimwkurhwl/Build/Products/Debug/libclang_rt.rtsan_osx_dynamic.dylib"
             isEnabled = "YES">

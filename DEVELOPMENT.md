@@ -2,10 +2,13 @@
 
 ## Tests
 
-When running tests, test runner needs to link sanitizer library. Since this executable is out of our control, we need to use `DYLD_INSERT_LIBRARIES` to force test runner to load sanitizer library.
-The issue is foundamentaly very similar to DAW -> Plugin interaction explained [here](https://forum.juce.com/t/using-realtimesanitizer-inside-daws/64557).
+Runtime tests use Swift 6.2 exit tests (`#expect(processExitsWith:)`). Each violation test runs in an isolated child process where RTSan can abort normally — tests expecting a violation use `.failure` and tests expecting no violation use `.success`.
 
-This environment variable is already set up in scheme settings in Xcode, but you might need to change to path on your machine for tests to work.
+### macOS
+
+On macOS, the test runner needs to link the sanitizer library. Since this executable is out of our control, we use `DYLD_INSERT_LIBRARIES` to force the test runner to load the sanitizer library. The issue is fundamentally very similar to DAW -> Plugin interaction explained [here](https://forum.juce.com/t/using-realtimesanitizer-inside-daws/64557).
+
+This environment variable is already set up in scheme settings in Xcode, but you might need to change the path on your machine for tests to work.
 
 E.g. when you run the test, you will get the following error:
 
@@ -15,20 +18,11 @@ DYLD_INSERT_LIBRARIES=/Users/josipcavar/Library/Developer/Xcode/DerivedData/RTSa
 "interceptors not installed" && 0
 ```
 
-Open Scheme settings and change `DYLD_INSERT_LIBRARIES` to environment variable to path in the log.
+Open Scheme settings and change `DYLD_INSERT_LIBRARIES` environment variable to the path in the log.
 
-Additionally, for tests to work, we need the following `RTSAN_OPTIONS`:
-- `abort_on_error=false`
-- `halt_on_error=false`
+### Linux
 
-These are both enabled in `RTSanStandaloneSwift-Package` scheme.
-
-Tests currently work by intercepting stderr output and making decisions based on that. This is not ideal, but seems like the only way to avoid test crash:
-
-- `abort_on_error` has to be false, otherwise the test will fail as the process will abort
-- `halt_on_error` has to be false, otherwise the test will fail as it will finish with a non-zero exit code
-- if the two above are false, death callback is not invoked
-- if `halt_on_error` is true, death callback is invoked but test will fail (due to non-zero) exit code
+On Linux, no special environment variables are needed — just run `swift test -v`.
 
 ## Build process
 
