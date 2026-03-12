@@ -1,5 +1,4 @@
 import SwiftSyntax
-import Foundation
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import RealtimeSanitizer
@@ -10,17 +9,10 @@ import Synchronization
 #if canImport(os)
 import os
 #endif
-#if canImport(SwiftGlibc)
-@preconcurrency import SwiftGlibc
-#endif
 import SwiftSyntaxMacrosGenericTestSupport
 
 @Suite(.serialized)
 final class RealtimeSanitizerTests {
-
-    init() {
-        RealtimeSanitizer.ensureInitialized()
-    }
 
     @Test
     func testDefaultDEBUGNonBlockingMacroExpansion() throws {
@@ -109,27 +101,25 @@ final class RealtimeSanitizerTests {
     }
 
     @Test
-    func testBlockingFunctionMarkedNonBlockingRaisesViolation() async throws {
-        @NonBlocking
-        func callBlocking() { print("asdf") }
-
-        await confirmation { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
+    func testBlockingFunctionMarkedNonBlockingRaisesViolation() async {
+        await #expect(processExitsWith: .failure) {
+            RealtimeSanitizer.ensureInitialized()
+            @NonBlocking
+            func callBlocking() { print("asdf") }
             callBlocking()
         }
     }
 
     @Test
     @available(iOS 18, macOS 15, *)
-    func testDetectsMutexLock() async throws {
-        @NonBlocking
-        func callBlocking() {
-            let mutex = Mutex(3)
-            mutex.withLock { $0 + 1 }
-        }
-
-        await confirmation { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
+    func testDetectsMutexLock() async {
+        await #expect(processExitsWith: .failure) {
+            RealtimeSanitizer.ensureInitialized()
+            @NonBlocking
+            func callBlocking() {
+                let mutex = Mutex(3)
+                mutex.withLock { $0 + 1 }
+            }
             callBlocking()
         }
     }
@@ -137,75 +127,60 @@ final class RealtimeSanitizerTests {
     #if canImport(os)
     @Test
     @available(iOS 16, *)
-    func testDetectsOSAllocatedUnfairLock() async throws {
-        @NonBlocking
-        func callBlocking() {
-            let lock = OSAllocatedUnfairLock(initialState: 3)
-            lock.withLock { $0 + 1 }
-        }
-
-        await confirmation { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
+    func testDetectsOSAllocatedUnfairLock() async {
+        await #expect(processExitsWith: .failure) {
+            RealtimeSanitizer.ensureInitialized()
+            @NonBlocking
+            func callBlocking() {
+                let lock = OSAllocatedUnfairLock(initialState: 3)
+                lock.withLock { $0 + 1 }
+            }
             callBlocking()
         }
     }
     #endif
+
     @Test
-    func testNonBlockingFunctionMarkedNonBlockingDoesntRaiseViolation() async throws {
+    func testNonBlockingFunctionMarkedNonBlockingDoesntRaiseViolation() {
         @NonBlocking
         func callNonBlocking() { 1 + 1 }
-
-        await confirmation(expectedCount: 0) { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
-            callNonBlocking()
-        }
+        callNonBlocking()
     }
 
     @Test
-    func testNotifyBlockingCallRaiseViolation() async throws {
-
-        @NonBlocking
-        func userBlocking() { RealtimeSanitizer.notifyBlockingCall(functionName: "userBlocking") }
-
-        await confirmation() { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
+    func testNotifyBlockingCallRaiseViolation() async {
+        await #expect(processExitsWith: .failure) {
+            RealtimeSanitizer.ensureInitialized()
+            @NonBlocking
+            func userBlocking() { RealtimeSanitizer.notifyBlockingCall(functionName: "userBlocking") }
             userBlocking()
         }
     }
 
     @Test
-    func testNotifyBlockingCallMacroRaiseViolation() async throws {
+    func testNotifyBlockingCallMacroRaiseViolation() async {
+        await #expect(processExitsWith: .failure) {
+            RealtimeSanitizer.ensureInitialized()
+            @Blocking
+            func userBlocking() { }
 
-        @Blocking
-        func userBlocking() { }
-
-        @NonBlocking
-        func callNonBlocking() { userBlocking() }
-
-        await confirmation() { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
+            @NonBlocking
+            func callNonBlocking() { userBlocking() }
             callNonBlocking()
         }
     }
 
     @Test
-    func testBlockingCallDoesntRaiseViolationIfNotAnnotated() async throws {
-
+    func testBlockingCallDoesntRaiseViolationIfNotAnnotated() {
         func userBlocking() { RealtimeSanitizer.notifyBlockingCall(functionName: "userBlocking") }
-
-        await confirmation(expectedCount: 0) { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
-            userBlocking()
-        }
+        userBlocking()
     }
 
     @Test
-    func testBlockingCallRaiseViolationWhenExplicitlyEntered() async throws {
-
-        func userBlocking() { RealtimeSanitizer.notifyBlockingCall(functionName: "userBlocking") }
-
-        await confirmation() { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
+    func testBlockingCallRaiseViolationWhenExplicitlyEntered() async {
+        await #expect(processExitsWith: .failure) {
+            RealtimeSanitizer.ensureInitialized()
+            func userBlocking() { RealtimeSanitizer.notifyBlockingCall(functionName: "userBlocking") }
             RealtimeSanitizer.realtimeEnter()
             userBlocking()
             RealtimeSanitizer.realtimeExit()
@@ -213,82 +188,38 @@ final class RealtimeSanitizerTests {
     }
 
     @Test
-    func testBlockingCallDoesntRaiseViolationWhenExplicitlyEnteredButDisabled() async throws {
-
+    func testBlockingCallDoesntRaiseViolationWhenExplicitlyEnteredButDisabled() {
         func userBlocking() { RealtimeSanitizer.notifyBlockingCall(functionName: "userBlocking") }
-
-        await confirmation(expectedCount: 0) { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
-            RealtimeSanitizer.disable()
-            RealtimeSanitizer.realtimeEnter()
-            userBlocking()
-            RealtimeSanitizer.realtimeExit()
-            RealtimeSanitizer.enable()
-        }
+        RealtimeSanitizer.disable()
+        RealtimeSanitizer.realtimeEnter()
+        userBlocking()
+        RealtimeSanitizer.realtimeExit()
+        RealtimeSanitizer.enable()
     }
 
     @Test
-    func testBlockingCallDoesntRaiseViolationWhenCompilationConditionNotActive() async throws {
-
+    func testBlockingCallDoesntRaiseViolationWhenCompilationConditionNotActive() {
         @NonBlocking(in: "CUSTOM")
         func userBlocking() { RealtimeSanitizer.notifyBlockingCall(functionName: "userBlocking") }
+        userBlocking()
+    }
 
-        await confirmation(expectedCount: 0) { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
+    @Test
+    func testBlockingCallRaisesViolationWhenInExplicitDEBUG() async {
+        await #expect(processExitsWith: .failure) {
+            RealtimeSanitizer.ensureInitialized()
+            @NonBlocking(in: "DEBUG")
+            func userBlocking() { RealtimeSanitizer.notifyBlockingCall(functionName: "userBlocking") }
             userBlocking()
         }
     }
 
     @Test
-    func testBlockingCallRaisesViolationWhenInExplicitDEBUG() async throws {
-
-        @NonBlocking(in: "DEBUG")
-        func userBlocking() { RealtimeSanitizer.notifyBlockingCall(functionName: "userBlocking") }
-
-        await confirmation(expectedCount: 1) { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
-            userBlocking()
-        }
-    }
-
-    @Test
-    func testBlockingCallDoesntRaiseViolationWhenInScopedDisabler() async throws {
-
+    func testBlockingCallDoesntRaiseViolationWhenInScopedDisabler() {
         @NonBlocking
         func userBlocking() { RealtimeSanitizer.notifyBlockingCall(functionName: "userBlocking") }
-
-        await confirmation(expectedCount: 0) { confirmation in
-            listenForUnsafeCall { confirmation.confirm() }
-            RealtimeSanitizer.withDisabled {
-                userBlocking()
-            }
+        RealtimeSanitizer.withDisabled {
+            userBlocking()
         }
     }
-}
-
-// extern "C" void __sanitizer_set_death_callback(void (*callback)(void));
-@_extern(c, "__sanitizer_set_death_callback")
-func setDeathCallback(_ callback: @convention(c) () -> Void) -> Void
-
-func listenForUnsafeCall(onDetect: @Sendable @escaping () -> Void) {
-    let outPipe = Pipe()
-    let savedStderr = dup(STDERR_FILENO)
-    outPipe.fileHandleForReading.readabilityHandler = { fileHandle in
-        let data = fileHandle.availableData
-        if data.isEmpty {
-            fileHandle.readabilityHandler = nil
-        }
-        if let str = String(data: data,  encoding: .utf8) {
-            if str.contains("unsafe-library-call") || str.contains("blocking-call") {
-                fileHandle.readabilityHandler = nil
-                dup2(savedStderr, STDERR_FILENO)
-                try! outPipe.fileHandleForWriting.close()
-                close(savedStderr)
-                print(str)
-                onDetect()
-            }
-        }
-    }
-    setvbuf(stderr, nil, _IONBF, 0)
-    dup2(outPipe.fileHandleForWriting.fileDescriptor, STDERR_FILENO)
 }

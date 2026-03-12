@@ -63,7 +63,7 @@ let package = Package(
                 "RealtimeSanitizerMacros",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
             ],
-            swiftSettings: [.enableExperimentalFeature("Extern")]
+            swiftSettings: []
         )
     ]
 )
