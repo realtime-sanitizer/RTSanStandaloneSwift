@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: swift build -v
     - name: Run tests
-      run: export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false"; swift test -v
+      run: swift test -v
   macos:
     runs-on: macos-26
     name: macOS
@@ -39,7 +39,6 @@ jobs:
     - name: Run tests
       run: |
         XCODE_DEV=$(xcode-select -p)
-        export RTSAN_OPTIONS="abort_on_error=false:halt_on_error=false"
         export DYLD_INSERT_LIBRARIES="/Users/runner/work/RTSanStandaloneSwift/RTSanStandaloneSwift/.build/arm64-apple-macosx/debug/libclang_rt.rtsan_osx_dynamic.dylib"
         export DYLD_FRAMEWORK_PATH="$XCODE_DEV/Platforms/MacOSX.platform/Developer/Library/Frameworks"
         "$XCODE_DEV/Toolchains/XcodeDefault.xctoolchain/usr/libexec/swift/pm/swiftpm-testing-helper" \
